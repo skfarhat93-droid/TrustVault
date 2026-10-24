@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}Manage access{% endblock %}
+{% block content %}
+<section class="page-heading">
+  <div><a class="back-link" href="{{ url_for('documents.index') }}">← Documents</a><span class="eyebrow">ACCESS CONTROL</span><h1>Manage document access</h1><p class="muted">For <strong>{{ document.title }}</strong>. Changes take effect immediately.</p></div>
+</section>
+<div class="permission-columns">
+  <section class="panel form-stack">
+    <span class="eyebrow">GRANT ACCESS</span><h2>Share with a user</h2>
+    <p class="muted small">Sharing grants access to the named account only. No public links are created.</p>
+    {% if candidates %}
+    <form method="post" class="form-stack">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <label for="user_id">User account</label><select id="user_id" name="user_id" required><option value="">Select a user</option>{% for user in candidates %}<option value="{{ user.id }}">{{ user.username }} · {{ user.role }}</option>{% endfor %}</select>
+      <label for="permission">Permission</label><select id="permission" name="permission"><option value="read">Read · view and download</option><option value="edit">Edit · change document details</option></select>
+      <button class="button button-primary" type="submit">Save permission</button>
+    </form>
+    {% else %}<p class="empty-cell">No eligible active users are available.</p>{% endif %}
+  </section>
+  <section class="panel">
+    <span class="eyebrow">CURRENTLY SHARED</span><h2>Access list</h2>
+    {% if granted %}<div class="access-list">{% for grant in granted %}
+      <div class="access-row"><div><strong>{{ grant.username }}</strong><span class="cell-sub">{{ grant.created_at[:10] }}</span></div><span class="permission-chip">{{ grant.permission }}</span><form method="post" action="{{ url_for('documents.revoke_permission', document_id=document.id, target_id=grant.user_id) }}"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><button class="text-button danger-text" type="submit">Revoke</button></form></div>
+    {% endfor %}</div>{% else %}<p class="empty-cell">No one else has access. You retain owner access.</p>{% endif %}
+  </section>
+</div>
+<p class="notice">Administrators can also manage permissions across documents. Admin status does not grant access to file contents.</p>
+{% endblock %}

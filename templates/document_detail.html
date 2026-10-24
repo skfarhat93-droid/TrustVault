@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}{{ document.title }}{% endblock %}
+{% block content %}
+<div class="detail-layout">
+  <section>
+    <a class="back-link" href="{{ url_for('documents.index') }}">← All documents</a>
+    <span class="eyebrow">SECURE DOCUMENT</span>
+    <h1 class="detail-title">{{ document.title }}</h1>
+    <p class="muted">Owned by {{ document.owner_name }} · Added {{ document.created_at[:10] }}</p>
+    <div class="detail-actions"><a class="button button-primary" href="{{ url_for('documents.view_file', document_id=document.id) }}" target="_blank" rel="noopener">View file ↗</a><a class="button button-quiet" href="{{ url_for('documents.download', document_id=document.id) }}">↓ Download</a>
+      {% if can_edit %}<a class="button button-quiet" href="{{ url_for('documents.edit', document_id=document.id) }}">Edit details</a>{% endif %}
+      {% if document.owner_id == current_user.id or current_user.role == 'admin' %}<a class="button button-quiet" href="{{ url_for('documents.manage_permissions', document_id=document.id) }}">Manage access</a>{% endif %}
+    </div>
+    <div class="panel detail-meta">
+      <div><span>Category</span><strong>{{ document.category }}</strong></div>
+      <div><span>Original filename</span><strong>{{ document.original_filename }}</strong></div>
+      <div><span>File type</span><strong>{{ document.content_type }}</strong></div>
+      <div><span>Size</span><strong>{{ (document.size_bytes / 1024)|round|int }} KB</strong></div>
+      <div><span>Last updated</span><strong>{{ document.updated_at[:10] }}</strong></div>
+    </div>
+    <div class="notice">Viewing or downloading this file is recorded in the audit trail. If access is revoked, subsequent requests are denied immediately.</div>
+    {% if document.owner_id == current_user.id %}
+    <form class="danger-zone" method="post" action="{{ url_for('documents.delete', document_id=document.id) }}" data-confirm="Permanently delete this document and its stored file?">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><div><strong>Delete this document</strong><p>This removes the stored file. An audit record of the deletion is retained.</p></div><button class="button button-danger" type="submit">Delete document</button>
+    </form>
+    {% endif %}
+  </section>
+</div>
+{% endblock %}

@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}Overview{% endblock %}
+{% block content %}
+<section class="page-heading">
+  <div><span class="eyebrow">YOUR WORKSPACE</span><h1>Good to see you, {{ current_user.username }}.</h1>
+    <p class="muted">Documents shared with you appear alongside the files you own.</p></div>
+  <div class="heading-actions">
+    <a class="button button-quiet" href="{{ url_for('documents.index') }}">Browse documents</a>
+    {% if current_user.role == 'owner' %}<a class="button button-primary" href="{{ url_for('documents.create') }}">＋ Upload a document</a>{% endif %}
+  </div>
+</section>
+<section class="welcome-banner">
+  <div class="banner-icon">↗</div><div><strong>Access is always checked live.</strong><p>Only documents you own or that someone explicitly shared with you are available.</p></div>
+</section>
+<section class="section-heading"><div><span class="eyebrow">RECENTLY AVAILABLE</span><h2>Your documents</h2></div><a class="text-link" href="{{ url_for('documents.index') }}">View all →</a></section>
+{% if documents %}
+<div class="document-grid">
+  {% for doc in documents %}
+  <a class="document-card" href="{{ url_for('documents.detail', document_id=doc.id) }}">
+    <span class="file-icon">▤</span><span class="category-tag">{{ doc.category }}</span>
+    <strong>{{ doc.title }}</strong><span class="muted small">Owned by {{ doc.owner_name }}</span>
+    <span class="card-date">Added {{ doc.created_at[:10] }}</span>
+  </a>
+  {% endfor %}
+</div>
+{% else %}
+<div class="empty-state"><span class="empty-icon">▤</span><h3>No documents yet</h3><p>When a document is shared with you, it will appear here.</p>
+{% if current_user.role == 'owner' %}<a class="button button-primary" href="{{ url_for('documents.create') }}">Upload your first document</a>{% endif %}
+</div>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#102b38">
+  <title>{% block title %}TrustVault{% endblock %} · TrustVault</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='app.css') }}">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="{{ url_for('views.dashboard') if current_user else url_for('auth.login') }}">
+      <span class="brand-mark">T</span><span>Trust<span class="brand-light">Vault</span></span>
+    </a>
+    {% if current_user %}
+    <nav class="main-nav" aria-label="Main navigation">
+      {% if current_user.role == 'admin' %}
+        <a href="{{ url_for('admin.dashboard') }}">Overview</a>
+        <a href="{{ url_for('admin.documents') }}">Documents</a>
+        <a href="{{ url_for('admin.users') }}">Users</a>
+        <a href="{{ url_for('admin.audit') }}">Audit trail</a>
+      {% else %}
+        <a href="{{ url_for('views.dashboard') }}">Overview</a>
+        <a href="{{ url_for('documents.index') }}">Documents</a>
+      {% endif %}
+    </nav>
+    <div class="account">
+      <span class="role-chip">{{ current_user.role }}</span>
+      <span class="account-name">{{ current_user.username }}</span>
+      <form method="post" action="{{ url_for('auth.logout') }}">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <button class="button button-quiet button-small" type="submit">Sign out</button>
+      </form>
+    </div>
+    {% endif %}
+  </header>
+  <main class="page">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+      <div class="flash-stack" role="status">
+        {% for category, message in messages %}
+          <div class="flash flash-{{ category }}">{{ message }}</div>
+        {% endfor %}
+      </div>
+      {% endif %}
+    {% endwith %}
+    {% block content %}{% endblock %}
+  </main>
+  <footer class="footer"><span>TrustVault · Secure sharing, accountable access.</span><span>Private by default</span></footer>
+  <script src="{{ url_for('static', filename='app.js') }}" defer></script>
+</body>
+</html>

@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block title %}Manage users{% endblock %}
+{% block content %}
+<section class="page-heading"><div><span class="eyebrow">ACCOUNT ADMINISTRATION</span><h1>Manage users</h1><p class="muted">Create accounts, change roles, reset passwords, or disable access.</p></div></section>
+<section class="panel user-create">
+  <div><span class="eyebrow">NEW ACCOUNT</span><h2>Create a user</h2><p class="muted small">Temporary password is never shown again. The user must change it at next sign-in.</p></div>
+  <form method="post" class="create-user-form"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <label>Username<input name="username" minlength="3" maxlength="40" pattern="[A-Za-z0-9_.-]+" required></label>
+    <label>Role<select name="role"><option value="viewer">Viewer</option><option value="owner">Document owner</option><option value="admin">Administrator</option></select></label>
+    <label>Temporary password<input name="password" type="password" minlength="12" autocomplete="new-password" required></label>
+    <button class="button button-primary" type="submit">Create account</button>
+  </form>
+</section>
+<div class="section-heading"><div><span class="eyebrow">REGISTERED ACCOUNTS</span><h2>{{ users|length }} accounts</h2></div></div>
+<div class="user-list">
+{% for user in users %}
+<article class="panel user-card">
+  <div class="user-ident"><span class="avatar">{{ user.username[:1]|upper }}</span><div><strong>{{ user.username }}</strong><span class="cell-sub">Joined {{ user.created_at[:10] }} · {{ 'Active' if user.active else 'Disabled' }}{% if user.password_change_required %} · password change required{% endif %}</span></div></div>
+  <form method="post" action="{{ url_for('admin.update_user', user_id=user.id) }}" class="user-controls">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <select name="role" aria-label="Role for {{ user.username }}"><option value="admin" {% if user.role == 'admin' %}selected{% endif %}>Admin</option><option value="owner" {% if user.role == 'owner' %}selected{% endif %}>Owner</option><option value="viewer" {% if user.role == 'viewer' %}selected{% endif %}>Viewer</option></select>
+    <select name="active" aria-label="Status for {{ user.username }}"><option value="1" {% if user.active %}selected{% endif %}>Active</option><option value="0" {% if not user.active %}selected{% endif %}>Disabled</option></select>
+    <button class="button button-quiet button-small" type="submit">Save</button>
+  </form>
+  <form method="post" action="{{ url_for('admin.reset_password', user_id=user.id) }}" class="reset-form">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <label class="sr-only" for="reset-{{ user.id }}">Temporary password for {{ user.username }}</label><input id="reset-{{ user.id }}" name="password" type="password" minlength="12" placeholder="New temporary password" autocomplete="new-password" required>
+    <button class="text-button" type="submit">Reset password</button>
+  </form>
+</article>
+{% endfor %}
+</div>
+<p class="notice">Accounts are disabled rather than deleted, preserving ownership relationships and historical audit actor references. At least one active administrator is always required.</p>
+{% endblock %}

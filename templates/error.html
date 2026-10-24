@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %}{{ title }}{% endblock %}
+{% block content %}
+<section class="error-state">
+  <span class="error-code">{{ status }}</span>
+  <span class="eyebrow">REQUEST NOT COMPLETED</span>
+  <h1>{{ title }}</h1>
+  <p class="muted">{{ message }}</p>
+  <a class="button button-primary" href="{{ url_for('views.dashboard') if current_user else url_for('auth.login') }}">Return to TrustVault</a>
+</section>
+{% endblock %}

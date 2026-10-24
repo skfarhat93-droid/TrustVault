@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}{{ 'Edit document' if document else 'Upload document' }}{% endblock %}
+{% block content %}
+<section class="form-shell">
+  <a class="back-link" href="{{ url_for('documents.detail', document_id=document.id) if document else url_for('documents.index') }}">← Back to documents</a>
+  <span class="eyebrow">{{ 'DOCUMENT DETAILS' if document else 'PRIVATE UPLOAD' }}</span>
+  <h1>{{ 'Edit document details' if document else 'Add a document' }}</h1>
+  <p class="muted">{% if document %}Update the name or category. Existing file contents are not modified.{% else %}Files are stored outside the public web directory and shared only with explicitly authorised accounts.{% endif %}</p>
+  <form class="panel form-stack" method="post" {% if not document %}enctype="multipart/form-data"{% endif %}>
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <label for="title">Document name</label><input id="title" name="title" maxlength="160" required value="{{ document.title if document else '' }}" placeholder="e.g. Project agreement">
+    <label for="category">Category</label><input id="category" name="category" maxlength="80" required value="{{ document.category if document else '' }}" placeholder="e.g. Contracts">
+    {% if not document %}<label for="file">Choose file <span class="label-hint">PDF, PNG, JPEG, or UTF-8 TXT · up to 10 MB</span></label><input id="file" name="file" type="file" accept=".pdf,.png,.jpg,.jpeg,.txt" required>{% endif %}
+    <button class="button button-primary" type="submit">{{ 'Save changes' if document else 'Upload securely' }}</button>
+  </form>
+</section>
+{% endblock %}

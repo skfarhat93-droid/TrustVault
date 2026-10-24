@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Audit trail{% endblock %}
+{% block content %}
+<section class="page-heading"><div><span class="eyebrow">APPEND-ONLY ACTIVITY LOG</span><h1>Audit trail</h1><p class="muted">Searchable record of authentication, document activity, permission changes, and denied access.</p></div></section>
+<form class="filter-panel audit-filter" method="get">
+  <label>Action<input name="action" value="{{ filters.action }}" placeholder="e.g. document_view"></label>
+  <label>Actor<input name="actor" value="{{ filters.actor }}" placeholder="Username"></label>
+  <label>Outcome<select name="outcome"><option value="">All outcomes</option>{% for state in ['success','denied','failure'] %}<option value="{{ state }}" {% if filters.outcome == state %}selected{% endif %}>{{ state|capitalize }}</option>{% endfor %}</select></label>
+  <button class="button button-primary" type="submit">Filter</button><a class="button button-quiet" href="{{ url_for('admin.audit') }}">Clear</a>
+</form>
+<div class="audit-summary"><span><strong>{{ total }}</strong> matching events</span><span>Page {{ page }} of {{ total_pages }}</span></div>
+<div class="panel table-panel"><div class="table-scroll"><table class="audit-table"><thead><tr><th>When (UTC)</th><th>Actor</th><th>Action</th><th>Document</th><th>Outcome</th><th>Context</th></tr></thead><tbody>
+{% for event in entries %}<tr><td class="nowrap">{{ event.created_at[:19]|replace('T',' ') }}</td><td>{{ event.username or 'Unknown' }}</td><td><span class="event-dot event-{{ event.outcome }}"></span>{{ event.action|replace('_',' ') }}</td><td>{% if event.document_id %}#{{ event.document_id }}{% else %}—{% endif %}</td><td><span class="outcome outcome-{{ event.outcome }}">{{ event.outcome }}</span></td><td class="context-cell"><code>{{ event.context }}</code></td></tr>
+{% else %}<tr><td colspan="6" class="empty-cell">No audit records match those filters.</td></tr>{% endfor %}
+</tbody></table></div></div>
+<nav class="pagination" aria-label="Audit pages">
+  {% if page > 1 %}<a class="button button-quiet button-small" href="{{ url_for('admin.audit', action=filters.action, actor=filters.actor, outcome=filters.outcome, page=page-1) }}">← Previous</a>{% endif %}
+  {% if page < total_pages %}<a class="button button-quiet button-small" href="{{ url_for('admin.audit', action=filters.action, actor=filters.actor, outcome=filters.outcome, page=page+1) }}">Next →</a>{% endif %}
+</nav>
+<p class="notice">SQLite triggers prevent ordinary application updates and deletions. This is not protection against a host or database administrator who can edit the SQLite file or disable triggers.</p>
+{% endblock %}

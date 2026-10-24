@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}Sign in{% endblock %}
+{% block content %}
+<section class="auth-layout">
+  <div class="auth-intro">
+    <span class="eyebrow">SECURE DOCUMENT SHARING</span>
+    <h1>Important files.<br><span>Accountable access.</span></h1>
+    <p>Share documents with named people, keep access under control, and follow every important action in a real audit trail.</p>
+    <div class="trust-points">
+      <span><i>✓</i> Permission-checked on every request</span>
+      <span><i>✓</i> Private file storage, never public links</span>
+      <span><i>✓</i> Append-only application audit records</span>
+    </div>
+  </div>
+  <form class="auth-card" method="post" action="{{ url_for('auth.login') }}">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <span class="eyebrow">WELCOME BACK</span>
+    <h2>Sign in to TrustVault</h2>
+    <p class="muted">Use your account credentials to continue.</p>
+    <label for="username">Username</label>
+    <input id="username" name="username" autocomplete="username" required maxlength="40" autofocus>
+    <label for="password">Password</label>
+    <input id="password" type="password" name="password" autocomplete="current-password" required>
+    <button class="button button-primary button-wide" type="submit">Sign in <span>→</span></button>
+    <p class="form-note">Sign-in attempts are rate limited. Your session is protected with secure cookie settings.</p>
+  </form>
+</section>
+{% endblock %}
