@@ -21,5 +21,14 @@ Verification and commit notes
 - Command run: "python -m pytest -q --tb=short"
 - Observed result: 20 tests passed.
 - What this verifies: The current automated test suite passed in the local environment. This is not an independent security audit and does not prove that every security control is effective.
-- Git history: No commits existed when this entry was prepared. Add the actual commit hash or link after making the corresponding commit; do not invent one.
-- Remaining work: Review the challenge's AI disclosure requirements, confirm the log accurately reflects actual AI use and tool outputs, and complete the required prompt-by-prompt records.
+- Git history: The repository history includes commit "aa940c2" on the master branch, aligned with origin/master at the time checked. This commit is not necessarily associated with every task summarized above; task-specific commit links should be added only after verifying the relevant changes.
+
+2026-10-25 — Render deployment troubleshooting
+
+- Problem: The initial Render deployment failed because the configured start command used Gunicorn, which was not installed.
+- Observed tool output: "bash: line 1: gunicorn: command not found"
+- What I checked: I inspected "requirements.txt" and found that "waitress==3.0.2" was already listed.
+- Correction: I changed the Render start command to "waitress-serve --host=0.0.0.0 --port=$PORT run:app".
+- Observed result: Render logs reported "INFO:waitress:Serving on http://0.0.0.0:10000" and then "Your service is live".
+- What this verifies: The deployment started successfully with the revised command, and I opened the live website. This does not independently verify every security feature.
+- Commit reference: No commit is claimed for this Render dashboard configuration change unless a corresponding repository change is verified.
