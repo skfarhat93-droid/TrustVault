@@ -232,3 +232,551 @@ td strong { color: #203b45; font-size: 12px; }
   .reset-form input { flex: 1; }
   .audit-filter label { flex: 1; }
 }
+
+/* =========================================
+   TrustVault — Modern UI Enhancement
+   Added without replacing existing styles
+   ========================================= */
+
+:root {
+  --ink: #172b4d;
+  --muted: #66758b;
+  --teal: #0f8b83;
+  --teal-dark: #08746d;
+  --mint: #e5f7f3;
+  --line: #e1e8f0;
+  --paper: #ffffff;
+  --canvas: #f4f7fb;
+  --shadow: 0 10px 30px rgba(23, 43, 77, 0.07);
+  --shadow-hover: 0 16px 36px rgba(23, 43, 77, 0.12);
+}
+
+body {
+  background:
+    radial-gradient(ellipse at 10% 0%, rgba(15, 139, 131, 0.06), transparent 35%),
+    var(--canvas);
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+}
+
+.topbar {
+  background: linear-gradient(115deg, #10243e 0%, #153d50 65%, #145b61 100%);
+  box-shadow: 0 4px 18px rgba(16, 36, 62, 0.12);
+}
+
+.brand {
+  letter-spacing: -0.5px;
+}
+
+.brand-mark {
+  background: linear-gradient(145deg, #8ce6ca, #46bba8);
+  box-shadow: 0 4px 12px rgba(70, 187, 168, 0.2);
+}
+
+.main-nav a {
+  position: relative;
+  padding: 8px 0;
+  transition: color 0.2s ease;
+}
+
+.main-nav a:hover {
+  color: #91f0d7;
+}
+
+.account {
+  gap: 11px;
+}
+
+.role-chip {
+  background: rgba(255, 255, 255, 0.07);
+  border-color: rgba(180, 226, 220, 0.28);
+}
+
+.page {
+  padding-top: 40px;
+  padding-bottom: 64px;
+}
+
+.eyebrow {
+  color: #087e76;
+  letter-spacing: 0.17em;
+}
+
+h1 {
+  letter-spacing: -0.04em;
+}
+
+h2,
+h3 {
+  color: #1c3554;
+}
+
+.button {
+  border-radius: 9px;
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.2s ease;
+}
+
+.button-primary {
+  background: linear-gradient(135deg, #10978c, #08776f);
+  box-shadow: 0 5px 13px rgba(15, 139, 131, 0.18);
+}
+
+.button-primary:hover {
+  background: linear-gradient(135deg, #0c8279, #075f59);
+  box-shadow: 0 8px 18px rgba(15, 139, 131, 0.24);
+}
+
+.button-quiet {
+  background: #fff;
+  border-color: #dce5ed;
+}
+
+.button-quiet:hover {
+  background: #f2fbf9;
+  border-color: #a9d8cd;
+}
+
+.panel,
+.auth-card,
+.document-card,
+.stat-card,
+.error-state {
+  border-color: #e1e8f0;
+  box-shadow: 0 5px 20px rgba(23, 43, 77, 0.035);
+}
+
+.panel {
+  border-radius: 14px;
+}
+
+.auth-card {
+  border-radius: 18px;
+  box-shadow: 0 18px 48px rgba(23, 43, 77, 0.09);
+}
+
+.auth-intro h1 span {
+  color: #0c8c82;
+}
+
+.trust-points i {
+  background: #dff7ef;
+}
+
+input,
+select {
+  border-color: #dbe4ed;
+  border-radius: 9px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+input:focus,
+select:focus {
+  border-color: #0f9b8f;
+  box-shadow: 0 0 0 3px rgba(15, 155, 143, 0.13);
+}
+
+.welcome-banner {
+  border-color: #cfe9e2;
+  border-radius: 14px;
+  background: linear-gradient(115deg, #e5f7f1, #f3fafc);
+}
+
+.banner-icon {
+  box-shadow: 0 3px 10px rgba(20, 80, 80, 0.06);
+}
+
+.document-card {
+  border-radius: 14px;
+  padding: 22px;
+}
+
+.document-card:hover {
+  border-color: #91cec0;
+  box-shadow: var(--shadow-hover);
+  transform: translateY(-3px);
+}
+
+.file-icon {
+  border-radius: 11px;
+  background: linear-gradient(145deg, #e2f7f1, #e9f0ff);
+  color: #087e76;
+}
+
+.category-tag,
+.permission-chip {
+  background: #e5f7f1;
+  color: #08766d;
+}
+
+.stats-grid {
+  gap: 16px;
+}
+
+.stat-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 14px;
+  padding: 21px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.stat-card::after {
+  position: absolute;
+  right: -20px;
+  bottom: -32px;
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  background: rgba(15, 139, 131, 0.055);
+  content: "";
+  pointer-events: none;
+}
+
+.stat-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow);
+}
+
+.stat-card strong {
+  color: #172b4d;
+}
+
+th {
+  background: #f0f5f9;
+  color: #62758a;
+}
+
+td {
+  border-top-color: #edf1f6;
+}
+
+tr:hover td {
+  background: #fafcfe;
+}
+
+.table-link,
+.text-link,
+.text-button {
+  color: #087e76;
+}
+
+.filter-panel {
+  border-color: #e1e8f0;
+  border-radius: 12px;
+  box-shadow: 0 3px 12px rgba(23, 43, 77, 0.025);
+}
+
+.flash {
+  border-radius: 10px;
+  box-shadow: 0 3px 10px rgba(23, 43, 77, 0.025);
+}
+
+.flash-success {
+  background: #effaf4;
+  border-color: #c5e8d3;
+}
+
+.flash-error {
+  background: #fff5f4;
+  border-color: #f0d2ce;
+}
+
+.empty-state {
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.75);
+}
+
+.notice {
+  border-left-color: #0f9b8f;
+  background: #eaf7f4;
+  color: #426b68;
+}
+
+.footer {
+  color: #78889a;
+}
+
+button:focus-visible,
+a:focus-visible {
+  outline: 3px solid rgba(15, 155, 143, 0.65);
+  outline-offset: 3px;
+}
+
+@media (max-width: 620px) {
+  .page {
+    padding-top: 26px;
+  }
+
+  .auth-card {
+    border-radius: 15px;
+  }
+
+  .document-card {
+    padding: 19px;
+  }
+
+  .stats-grid {
+    gap: 10px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}
+/* TrustVault — visual refresh */
+
+.page-heading {
+  padding: 28px 30px;
+  border: 1px solid #dcebe8;
+  border-radius: 18px;
+  background: linear-gradient(120deg, #e7f7f2, #ffffff 72%);
+  box-shadow: 0 10px 28px rgba(20, 60, 75, 0.06);
+}
+
+.document-card,
+.stat-card {
+  border-radius: 16px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.document-card:hover,
+.stat-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 14px 30px rgba(23, 43, 77, 0.10);
+}
+
+.section-heading {
+  padding-bottom: 10px;
+  border-bottom: 1px solid #e1e8f0;
+}
+
+.file-icon {
+  width: 46px;
+  height: 46px;
+  border-radius: 13px;
+  background: linear-gradient(145deg, #dff7ef, #c8eee5);
+  font-size: 23px;
+}
+
+.empty-state {
+  border-radius: 16px;
+  background: linear-gradient(135deg, #ffffff, #f0f8f6);
+}
+
+@media (max-width: 620px) {
+  .page-heading {
+    padding: 20px;
+  }
+}
+
+/* TrustVault Premium Security Login */
+body:has(.auth-layout) {
+  background:
+    radial-gradient(ellipse at 15% 20%, rgba(22, 133, 129, .22), transparent 40%),
+    linear-gradient(135deg, #091525, #102b40 58%, #123e4b);
+  color: #f4f8fc;
+}
+
+body:has(.auth-layout) .page {
+  max-width: 1280px;
+  min-height: calc(100vh - 132px);
+  padding: 48px 30px 65px;
+}
+
+body:has(.auth-layout) .auth-layout {
+  max-width: 1120px;
+  grid-template-columns: 1fr 480px;
+  gap: 80px;
+  margin: 35px auto;
+}
+
+body:has(.auth-layout) .auth-intro h1 {
+  color: #ffffff;
+  font-size: clamp(42px, 5vw, 64px);
+  line-height: 1.08;
+  letter-spacing: -2px;
+}
+
+body:has(.auth-layout) .auth-intro h1 span {
+  color: #65dbc0;
+}
+
+body:has(.auth-layout) .auth-intro > p {
+  color: #c0d0dd;
+  font-size: 16px;
+  line-height: 1.9;
+}
+
+body:has(.auth-layout) .eyebrow {
+  color: #75e0c5;
+}
+
+body:has(.auth-layout) .trust-points {
+  color: #d8e5ed;
+  gap: 17px;
+}
+
+body:has(.auth-layout) .trust-points i {
+  background: #174a4c;
+  color: #80e4c8;
+}
+
+body:has(.auth-layout) .auth-card {
+  padding: 42px;
+  border: 1px solid rgba(255, 255, 255, .7);
+  border-radius: 22px;
+  background: #ffffff;
+  color: #172b43;
+  box-shadow: 0 28px 80px rgba(0, 0, 0, .28);
+}
+
+body:has(.auth-layout) .auth-card h2 {
+  color: #142b43;
+  font-size: 27px;
+}
+
+body:has(.auth-layout) .auth-card .muted {
+  color: #708096;
+}
+
+body:has(.auth-layout) .auth-card label {
+  color: #34465c;
+}
+
+body:has(.auth-layout) .auth-card input {
+  min-height: 48px;
+  border: 1px solid #dce5ed;
+  border-radius: 10px;
+  background: #fafdff;
+}
+
+body:has(.auth-layout) .auth-card input:focus {
+  border-color: #149b8d;
+  box-shadow: 0 0 0 4px rgba(20, 155, 141, .12);
+}
+
+body:has(.auth-layout) .auth-card .button-primary {
+  min-height: 49px;
+  border-radius: 10px;
+  background: linear-gradient(110deg, #159d90, #08766e);
+  box-shadow: 0 8px 20px rgba(15, 139, 131, .2);
+}
+
+body:has(.auth-layout) .auth-card .button-primary:hover {
+  background: linear-gradient(110deg, #0e887e, #075e58);
+}
+
+body:has(.auth-layout) .form-note {
+  color: #77879a;
+  font-size: 11px;
+  line-height: 1.8;
+}
+
+@media (max-width: 850px) {
+  body:has(.auth-layout) .auth-layout {
+    grid-template-columns: 1fr 360px;
+    gap: 28px;
+  }
+
+  body:has(.auth-layout) .auth-card {
+    padding: 28px;
+  }
+}
+
+@media (max-width: 620px) {
+  body:has(.auth-layout) .page {
+    padding: 25px 17px 40px;
+  }
+
+  body:has(.auth-layout) .auth-layout {
+    gap: 22px;
+  }
+
+  body:has(.auth-layout) .auth-intro h1 {
+    font-size: 39px;
+  }
+
+  body:has(.auth-layout) .auth-card {
+    padding: 26px 21px;
+  }
+}
+/* TrustVault login layout refinement */
+body:has(.auth-layout) .page {
+  padding-top: 24px;
+  padding-bottom: 32px;
+}
+
+body:has(.auth-layout) .auth-layout {
+  grid-template-columns: minmax(0, 1fr) minmax(380px, 460px);
+  gap: 56px;
+  max-width: 1120px;
+  margin: 12px auto 24px;
+  align-items: center;
+}
+
+body:has(.auth-layout) .auth-intro {
+  min-width: 0;
+}
+
+body:has(.auth-layout) .auth-intro h1 {
+  max-width: 570px;
+  font-size: clamp(38px, 4.3vw, 56px);
+}
+
+body:has(.auth-layout) .auth-intro > p {
+  max-width: 500px;
+}
+
+body:has(.auth-layout) .auth-card {
+  width: 100%;
+  padding: 32px;
+}
+
+@media (max-width: 850px) {
+  body:has(.auth-layout) .auth-layout {
+    grid-template-columns: 1fr;
+    max-width: 520px;
+    gap: 24px;
+  }
+}
+/* Final login screen spacing */
+body:has(.auth-layout) .page {
+  padding-top: 16px;
+  padding-bottom: 16px;
+}
+
+body:has(.auth-layout) .auth-layout {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+body:has(.auth-layout) .auth-intro h1 {
+  line-height: 1.06;
+}
+
+body:has(.auth-layout) .trust-points {
+  margin-top: 22px;
+  gap: 11px;
+}
+
+body:has(.auth-layout) .auth-card {
+  padding: 28px 32px;
+}
+
+body:has(.auth-layout) .auth-card label {
+  margin-top: 13px;
+}
+
+body:has(.auth-layout) .auth-card .button-wide {
+  margin-top: 10px;
+}

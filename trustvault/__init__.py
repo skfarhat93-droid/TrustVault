@@ -14,7 +14,8 @@ csrf = CSRFProtect()
 
 def create_app(test_config=None):
     app = Flask(
-        __name__, instance_relative_config=True,
+        __name__, 
+        instance_relative_config=True,
         template_folder="../templates", static_folder="../static",
     )
     Path(app.instance_path).mkdir(parents=True, exist_ok=True)
